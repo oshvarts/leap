@@ -1,6 +1,7 @@
 FROM opensuse:leap
 
 # Add the machinery repository
-RUN zypper ar -G -f http://download.opensuse.org/repositories/systemsmanagement:/machinery/openSUSE_Leap_42.1/ machinery
+## https://software.opensuse.org/ymp/systemsmanagement:machinery/openSUSE_Leap_15.0/machinery.ymp
+RUN zypper ar -G -f http://download.opensuse.org/repositories/systemsmanagement:/machinery/openSUSE_Leap_15.0/
 # Install machinery
 RUN zypper -n --gpg-auto-import-keys install machinery
