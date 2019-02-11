@@ -34,4 +34,4 @@ RUN set -ex && \
     chmod g=u /etc/passwd /etc/group && \
     ls -la /etc/passwd && ls -la /etc/group
 
-USER $USER_NAME
+USER $USER_UID
