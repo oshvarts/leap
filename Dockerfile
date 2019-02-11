@@ -2,14 +2,12 @@ FROM opensuse:leap
 
 MAINTAINER oshvarts@ford.com
 
-ENV \
-    HOME=/opt/app-root \
-    USER_NAME=default \
-    USER_UID=1001 \
-    SUMMARY="Base, random-user safe Opensuse Leap system." 
+ENV HOME=/opt/app-root
+ENV USER_NAME=default
+ENV USER_UID=1001
+ENV SUMMARY="Base, random-user safe Opensuse Leap system." 
 
-LABEL \
-    summary="$SUMMARY"
+LABEL summary="$SUMMARY"
 
 RUN set -ex && \
     #################################################################
