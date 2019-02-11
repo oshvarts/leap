@@ -30,8 +30,8 @@ RUN set -ex && \
     chgrp -R 0 ${HOME} && \
     chmod g=u ${HOME} && \
     #chmod -R 0644 /etc/pam.d/vsftpd-virtual && \
-    chmod 0775 /usr/bin/entrypoint && \
-    chgrp 0 /usr/bin/entrypoint && \
+    #chmod 0775 /usr/bin/entrypoint && \
+    #chgrp 0 /usr/bin/entrypoint && \
     chmod 0664 /etc/passwd /etc/group && \
     chmod g=u /etc/passwd /etc/group && \
     ls -la /etc/passwd && ls -la /etc/group
