@@ -2,14 +2,33 @@ FROM opensuse:leap
 
 MAINTAINER oshvarts@ford.com
 
-ENV HOME=/opt/app-root
-ENV USER_NAME=default
-ENV USER_UID=1001
-ENV SUMMARY="Base, random-user safe Opensuse Leap system." 
+ARG TINI_VERSION=0.18.0
+ARG TINI_SHA256SUM=eadb9d6e2dc960655481d78a92d2c8bc021861045987ccd3e27c7eae5af0cf33
 
-LABEL summary="$SUMMARY"
+ENV HOME=/opt/app-root \
+    USER_NAME=default \
+    USER_UID=1001 \
+    SUMMARY="Base, random-user safe Opensuse Leap OS." 
+
+LABEL summary="${SUMMARY}"
 
 RUN set -ex && \
+    #################################################################
+    ## Use tini as subreaper in container to adopt zombie processes
+    #################################################################
+    curl \
+        --connect-timeout "${CURL_CONNECTION_TIMEOUT:-20}" \
+        --retry "${CURL_RETRY:-5}" \
+        --retry-delay "${CURL_RETRY_DELAY:-0}" \
+        --retry-max-time "${CURL_RETRY_MAX_TIME:-60}" \
+        --progress-bar \
+        --location \
+        --fail \
+        --show-error \
+        https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static-amd64 \
+        -o /usr/bin/tini && \
+    echo "${TINI_SHA256SUM} /usr/bin/tini" | sha256sum -c - && \
+    chmod 0755 /usr/bin/tini && \
     #################################################################
     # Add user and group first to make sure their IDs get assigned
     # consistently, regardless of whatever dependencies get added
@@ -23,15 +42,15 @@ RUN set -ex && \
     #################################################################
     # user name recognition at runtime w/ an arbitrary uid
     #################################################################
-    #mkdir -p ${HOME}/etc/vsftpd/certs && \
-    #chown -R ${USER_UID}:0 ${HOME} /etc/vsftpd && \
     chgrp -R 0 ${HOME} && \
     chmod g=u ${HOME} && \
-    #chmod -R 0644 /etc/pam.d/vsftpd-virtual && \
     #chmod 0775 /usr/bin/entrypoint && \
     #chgrp 0 /usr/bin/entrypoint && \
     chmod 0664 /etc/passwd /etc/group && \
     chmod g=u /etc/passwd /etc/group && \
     ls -la /etc/passwd && ls -la /etc/group
 
-USER 1001
+USER $USER_UID
+
+ENTRYPOINT ["/usr/bin/tini", "--"]
+
