@@ -16,19 +16,19 @@ RUN set -ex && \
     #################################################################
     ## Use tini as subreaper in container to adopt zombie processes
     #################################################################
-    curl \
-        --connect-timeout "${CURL_CONNECTION_TIMEOUT:-20}" \
-        --retry "${CURL_RETRY:-5}" \
-        --retry-delay "${CURL_RETRY_DELAY:-0}" \
-        --retry-max-time "${CURL_RETRY_MAX_TIME:-60}" \
-        --progress-bar \
-        --location \
-        --fail \
-        --show-error \
-        https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static-amd64 \
-        -o /usr/bin/tini && \
-    echo "${TINI_SHA256SUM} /usr/bin/tini" | sha256sum -c - && \
-    chmod 0755 /usr/bin/tini && \
+    #curl \
+    #    --connect-timeout "${CURL_CONNECTION_TIMEOUT:-20}" \
+    #    --retry "${CURL_RETRY:-5}" \
+    #    --retry-delay "${CURL_RETRY_DELAY:-0}" \
+    #    --retry-max-time "${CURL_RETRY_MAX_TIME:-60}" \
+    #    --progress-bar \
+    #    --location \
+    #    --fail \
+    #    --show-error \
+    #    https://github.com/krallin/tini/releases/download/v${TINI_VERSION}/tini-static-amd64 \
+    #    -o /usr/bin/tini && \
+    #echo "${TINI_SHA256SUM} /usr/bin/tini" | sha256sum -c - && \
+    #chmod 0755 /usr/bin/tini && \
     #################################################################
     # Add user and group first to make sure their IDs get assigned
     # consistently, regardless of whatever dependencies get added
@@ -52,5 +52,5 @@ RUN set -ex && \
 
 USER $USER_UID
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
+ENTRYPOINT ["/usr/bin/bash"]
 
