@@ -1,16 +1,23 @@
 FROM docker.io/opensuse/leap:15.0
 
-MAINTAINER oshvarts@ford.com
-
-ARG TINI_VERSION=0.18.0
-ARG TINI_SHA256SUM=eadb9d6e2dc960655481d78a92d2c8bc021861045987ccd3e27c7eae5af0cf33
+ARG BUILD_DATE
+ARG VCS_URL
+ARG VCS_REF
 
 ENV HOME=/opt/app-root \
     USER_NAME=default \
     USER_UID=1001 \
     SUMMARY="Base, random-user safe Opensuse Leap OS." 
 
-LABEL summary="${SUMMARY}"
+LABEL \
+    summary="$SUMMARY" \
+    description="$SUMMARY" \
+    io.k8s.description="$SUMMARY" \
+    io.k8s.display-name="leap" \
+    org.label-schema.name="aos/leap" \
+    org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.vcs-url=$VCS_URL \
+    org.label-schema.vcs-ref=$VCS_REF
 
 RUN set -ex && \
     #################################################################
