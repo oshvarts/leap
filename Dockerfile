@@ -1,4 +1,4 @@
-FROM opensuse:leap
+FROM docker.io/opensuse/leap:15.0
 
 MAINTAINER oshvarts@ford.com
 
@@ -48,9 +48,8 @@ RUN set -ex && \
     #chgrp 0 /usr/bin/entrypoint && \
     chmod 0664 /etc/passwd /etc/group && \
     chmod g=u /etc/passwd /etc/group && \
-    ls -la /etc/passwd && ls -la /etc/group && find /usr -print || true
+    ls -la /etc/passwd && ls -la /etc/group
 
 USER $USER_UID
 
 ENTRYPOINT ["/bin/bash"]
-
