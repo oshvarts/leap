@@ -48,7 +48,10 @@ RUN set -ex && \
     #chgrp 0 /usr/bin/entrypoint && \
     chmod 0664 /etc/passwd /etc/group && \
     chmod g=u /etc/passwd /etc/group && \
-    ls -la /etc/passwd && ls -la /etc/group
+    ls -la /etc/passwd && ls -la /etc/group && \
+    zypper -n refresh ; zypper -n up ; zypper se curl; zypper -n install curl wget iputils; zypper -n clean
+
+WORKDIR $HOME
 
 USER $USER_UID
 
