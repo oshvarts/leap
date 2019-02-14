@@ -52,4 +52,4 @@ RUN set -ex && \
 
 USER $USER_UID
 
-ENTRYPOINT ["/bin/bash"]
+ENTRYPOINT ['/bin/bash', '-c', 'sleep infinity']
