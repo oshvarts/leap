@@ -19,6 +19,8 @@ LABEL \
     org.label-schema.vcs-url=$VCS_URL \
     org.label-schema.vcs-ref=$VCS_REF
 
+ADD https://raw.githubusercontent.com/oshvarts/leap/master/entrypoint.sh /usr/bin/entrypoint.sh
+
 RUN set -ex && \
     #################################################################
     # Add user and group first to make sure their IDs get assigned
@@ -36,10 +38,12 @@ RUN set -ex && \
     chmod g=u ${HOME} && \
     chmod 0664 /etc/passwd /etc/group && \
     chmod g=u /etc/passwd /etc/group && \
+    chmod 0775 /usr/bin/entrypoint.sh && \
+    chgrp 0 /usr/bin/entrypoint.sh && \
     zypper -n refresh ; zypper -n up ; zypper -n install curl wget iputils; zypper -n clean
 
 WORKDIR $HOME
 
 USER $USER_UID
 
-CMD ["/bin/bash", "-c", "tail -f /dev/null"]
+CMD ["/bin/bash", "-c", "/usr/bin/entrypoint.sh && tail -f /dev/null"]
