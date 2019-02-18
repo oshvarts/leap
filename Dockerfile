@@ -40,7 +40,7 @@ RUN set -ex && \
     chmod g=u /etc/passwd /etc/group && \
     chmod 0775 /usr/bin/entrypoint.sh && \
     chgrp 0 /usr/bin/entrypoint.sh && \
-    zypper -n refresh ; zypper -n up ; zypper -n install curl wget iputils; zypper -n clean
+    zypper -n refresh ; zypper -n up ; zypper -n install curl wget iputils; zypper -n clean -all
 
 WORKDIR $HOME
 
