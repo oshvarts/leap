@@ -40,8 +40,11 @@ RUN set -ex && \
     chmod g=u /etc/passwd /etc/group && \
     chmod 0775 /usr/bin/entrypoint.sh && \
     chgrp 0 /usr/bin/entrypoint.sh && \
-    zypper -n refresh && zypper -n up && zypper -n install curl wget iputils ruby && \
-    zypper -n clean -all
+    chmod 0664 /etc/passwd /etc/group && \
+    zypper -n refresh && zypper -n up && \
+    zypper -n install curl wget iputils ruby && \
+    zypper -n clean -a
+
 
 WORKDIR $HOME
 
