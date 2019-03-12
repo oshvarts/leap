@@ -40,10 +40,11 @@ RUN set -ex && \
     chmod g=u /etc/passwd /etc/group && \
     chmod 0775 /usr/bin/entrypoint.sh && \
     chgrp 0 /usr/bin/entrypoint.sh && \
-    chmod 0664 /etc/passwd /etc/group && \
     zypper -n refresh && zypper -n up && \
-    zypper -n install curl wget iputils ruby && \
-    zypper -n clean -a
+    zypper -n install which curl wget iputils ruby && \
+    zypper -n clean -a && \
+    # Reset permissions on password file that zypper "permissions" package clobbers
+    chmod 0664 /etc/passwd /etc/group
 
 
 WORKDIR $HOME
